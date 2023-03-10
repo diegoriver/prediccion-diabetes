@@ -9,9 +9,9 @@ import numpy as np
 import streamlit as st
 import tensorflow as tf
 import pandas as pd
-from pyecharts import options as opts
-from pyecharts.charts import Bar
-from streamlit_echarts import st_pyecharts
+# from pyecharts import options as opts
+# from pyecharts.charts import Bar
+# from streamlit_echarts import st_pyecharts
 
 
 # Se recibe la imagen y el modelo, devuelve la predicción
