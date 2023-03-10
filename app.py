@@ -8,6 +8,7 @@
 import numpy as np
 import streamlit as st
 import tensorflow as tf
+import pandas as pd
 
 
 # Se recibe la imagen y el modelo, devuelve la predicción
@@ -19,7 +20,7 @@ def model_prediction(x_in, model):
     return preds
 
 
-def main():  
+def prediction():  
     model = ''
     # Se carga el modelo
     if model == '':
@@ -28,7 +29,7 @@ def main():
 
     # Título
     html_temp = """
-    <h1 style="color:#181082;text-align:center;">SISTEMA DE PREDICCIÓN DE DIABETES </h1>
+    <h1 style="color:#181082;text-align:center;">SISTEMA DE PREDICCIÓN DE DIABETES CON UNA REDE NEURONAL PROFUNDA</h1>
     </div>
     """
     st.markdown(html_temp, unsafe_allow_html=True)
@@ -106,8 +107,7 @@ def main():
     if Sex_formulario == 'Femenino': Sex = 0
     else: Sex = 1
     
-    Age_formulario = st.radio( "19. Edad:",
-    ('De 18 a 24 años', 'De 25 a 29', 'De 30 a 34', 'De 35 a 39', 'De 40 a 44', 'De 45 a 49', 
+    Age_formulario = st.radio( "19. Edad:",('De 18 a 24 años', 'De 25 a 29', 'De 30 a 34', 'De 35 a 39', 'De 40 a 44', 'De 45 a 49', 
     'De 50 a 54','De 55 a 59', 'De 60 a 64', 'De 65 a 69', 'De 70 a 74', 'De 75 a 79', '80 a mas'))
     if Age_formulario == 'De 18 a 24 años': Age = 1
     if Age_formulario == 'De 25 a 29': Age = 2
@@ -156,9 +156,10 @@ def main():
     if Income_formulario == 'De 36.000 a 48.000': Income = 6
     if Income_formulario == 'De 49.000 a 61.000': Income = 7
     if Income_formulario == 'De 62.000 a 75.000': Income = 8
-    # st.write("I'm ", Income)
 
-    # Income = st.number_input("21. Ingresos: (1 = Menos de 10.000. 2. De 10.000 a 16.000. 3. De 17.000 a 22.000  4. De 23.000 a 28.000  5. De 29.000 a 35.000 6. De 36.000 a 48.000 7. De 49.000 a 61.000  8. De 62.000 a 75.000  )", step=1, max_value=8, min_value=1)
+    ## se crea un dataframe vacio
+    df = pd.DataFrame(columns=['% NO DIABÉTICO', '% PRE DIABÉTICO', '% DIABÉTICO'])
+    placeholder = st.empty()
 
     # El botón predicción se usa para iniciar el procesamiento
     if st.button("Predicción:"):
@@ -187,9 +188,9 @@ def main():
                 ]
 
         predictS = model_prediction(x_in, model)
-
         n = predictS[0].ravel().tolist()
         i = n.index(max(n))
+
         if i == 0:
             resultado_final = "No diabetico"
         elif i == 1:
@@ -197,9 +198,13 @@ def main():
         elif i == 2:
             resultado_final = "Diabetico"
 
-        # st.success('SU DIAGNÓSTICO ES: ccc')
-        st.success('{}'.format(resultado_final).upper())
+        df.loc[i+1] = ["{:.2f}".format(n[0]), "{:.2f}".format(n[1]), "{:.2f}".format(n[2])]
+        with placeholder.container():
+            st.dataframe(df)
+        st.success(f"{resultado_final}")
 
+        return (n)
 
 if __name__ == '__main__':
-    main()
+    prediction_matrix = prediction()
+    
