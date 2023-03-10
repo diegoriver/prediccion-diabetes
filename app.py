@@ -9,9 +9,6 @@ import numpy as np
 import streamlit as st
 import tensorflow as tf
 import pandas as pd
-# from pyecharts import options as opts
-# from pyecharts.charts import Bar
-# from streamlit_echarts import st_pyecharts
 
 
 # Se recibe la imagen y el modelo, devuelve la predicción
@@ -216,23 +213,6 @@ def prediction():
         st.dataframe(df)
 
         st.bar_chart(df)
-
-        # pie_chart = (
-        #     Bar()
-        #     .add_xaxis(["NO DIABETICOS", "PRE DIABÉTICO", "DIABÉTICO"])
-        #     .add_yaxis(
-        #         "ON / OFF", [round(nodiabetico*100, 2), round(prediabetico*100, 2), round(diabetico*100, 2)]
-        #     )
-        #     .set_global_opts(
-        #         title_opts=opts.TitleOpts(
-        #             title="Predicción del la red neuronal", subtitle="% valores en porcentajes"
-        #         ),
-                
-        #     )
-        # )
-        # st_pyecharts(pie_chart)
-
-       
 
 if __name__ == '__main__':
 

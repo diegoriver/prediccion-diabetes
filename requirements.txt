@@ -8,5 +8,3 @@ tensorflow==2.11.0
 pyyaml 
 h5py
 jinja2
-pyecharts
-treamlit_echarts
