@@ -159,7 +159,7 @@ def prediction():
 
     ## se crea un dataframe vacio
     # df = pd.DataFrame(columns=['% NO DIABÉTICO', '% PRE DIABÉTICO', '% DIABÉTICO'])
-    # placeholder = st.empty()
+
 
     # El botón predicción se usa para iniciar el procesamiento
     if st.button("Predicción:"):
@@ -189,6 +189,9 @@ def prediction():
 
         predictS = model_prediction(x_in, model)
         n = predictS[0].ravel().tolist()
+        a = n[0]
+        b = n[1]
+        c = n[2]
         i = n.index(max(n))
 
         if i == 0:
@@ -198,25 +201,27 @@ def prediction():
         elif i == 2:
             resultado_final = "Diabetico"
 
-        # df.loc[i+1] = ["{:.2f}".format(n[0]), "{:.2f}".format(n[1]), "{:.2f}".format(n[2])]
-        # with placeholder.container():
-        #     st.dataframe(df)
-        # st.success(f"{resultado_final}")
+        nodiabetico = a
+        prediabetico = b
+        diabetico = c
 
-        return (n)
+        st.success(f"{resultado_final}")
+
+        df = pd.DataFrame(
+            {
+                'NO DIABÉTICO': f"{round(nodiabetico*100, 2)}%",
+                'PRE DIABÉTICO': f"{round(prediabetico*100, 2)}%",
+                'DIABÉTICO': f"{round(diabetico*100, 2)}%"
+            }, index=["Resultado"]
+        )
+
+        st.dataframe(df)
+        return ()
 
 if __name__ == '__main__':
-    a = 1
-    df = pd.DataFrame(columns=['% NO DIABÉTICO', '% PRE DIABÉTICO', '% DIABÉTICO'])
-    placeholder = st.container()
 
-    n = prediction()
+    prediction()
+ 
     
-    # st.success(f"{resultado_final}")
-
-    df.loc[a+1] = ["{:.2f}".format(n[0]),"{:.2f}".format(n[1]), "{:.2f}".format(n[2])]
-    
-    with placeholder.container():
-        st.dataframe(df)
     
     
