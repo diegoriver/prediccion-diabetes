@@ -9,7 +9,9 @@ import numpy as np
 import streamlit as st
 import tensorflow as tf
 import pandas as pd
-# import altair as alt
+from pyecharts import options as opts
+from pyecharts.charts import Bar
+from streamlit_echarts import st_pyecharts
 
 
 # Se recibe la imagen y el modelo, devuelve la predicción
@@ -190,9 +192,9 @@ def prediction():
 
         predictS = model_prediction(x_in, model)
         n = predictS[0].ravel().tolist()
-        a = n[0]
-        b = n[1]
-        c = n[2]
+        nodiabetico = n[0]
+        prediabetico = n[1]
+        diabetico = n[2]
         i = n.index(max(n))
 
         if i == 0:
@@ -201,10 +203,6 @@ def prediction():
             resultado_final = "Pre diabetico"
         elif i == 2:
             resultado_final = "Diabetico"
-
-        nodiabetico = a
-        prediabetico = b
-        diabetico = c
 
         st.success(f"{resultado_final}")
 
@@ -217,12 +215,22 @@ def prediction():
         )
         st.dataframe(df)
 
-        st.bar_chart(df)
+        pie_chart = (
+            Bar()
+            .add_xaxis(["NO DIABETICOS", "PRE DIABÉTICO", "DIABÉTICO"])
+            .add_yaxis(
+                "ON / OFF", [round(nodiabetico*100, 2), round(prediabetico*100, 2), round(diabetico*100, 2)]
+            )
+            .set_global_opts(
+                title_opts=opts.TitleOpts(
+                    title="Predicción del la red neuronal", subtitle="% valores en porcentajes"
+                ),
+                
+            )
+        )
+        st_pyecharts(pie_chart)
 
-        # altair = alt.Chart(df).mark_circle().encode(
-        #     x='a', y='b', size='c', color='c', tooltip=['a', 'b', 'c'])
-        # st.altair_chart(altair)
-        
+       
 
 if __name__ == '__main__':
 
