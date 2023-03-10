@@ -29,7 +29,7 @@ def prediction():
 
     # Título
     html_temp = """
-    <h1 style="color:#181082;text-align:center;">SISTEMA DE PREDICCIÓN DE DIABETES CON UNA REDE NEURONAL PROFUNDA</h1>
+    <h1 style="color:#181082;text-align:center;">SISTEMA DE PREDICCIÓN DE DIABETES CON UNA RED NEURONAL PROFUNDA</h1>
     </div>
     """
     st.markdown(html_temp, unsafe_allow_html=True)
