@@ -203,16 +203,16 @@ def prediction():
         #     st.dataframe(df)
         # st.success(f"{resultado_final}")
 
-        return (n, resultado_final)
+        return (n)
 
 if __name__ == '__main__':
     a = 1
     df = pd.DataFrame(columns=['% NO DIABÉTICO', '% PRE DIABÉTICO', '% DIABÉTICO'])
     placeholder = st.container()
 
-    n, resultado_final = prediction()
+    n = prediction()
     
-    st.success(f"{resultado_final}")
+    # st.success(f"{resultado_final}")
 
     df.loc[a+1] = ["{:.2f}".format(n[0]),"{:.2f}".format(n[1]), "{:.2f}".format(n[2])]
     
