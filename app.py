@@ -9,6 +9,7 @@ import numpy as np
 import streamlit as st
 import tensorflow as tf
 import pandas as pd
+# import altair as alt
 
 
 # Se recibe la imagen y el modelo, devuelve la predicción
@@ -214,9 +215,14 @@ def prediction():
                 'DIABÉTICO': f"{round(diabetico*100, 2)}%"
             }, index=["Resultado"]
         )
-
         st.dataframe(df)
-        return ()
+
+        st.bar_chart(df)
+
+        # altair = alt.Chart(df).mark_circle().encode(
+        #     x='a', y='b', size='c', color='c', tooltip=['a', 'b', 'c'])
+        # st.altair_chart(altair)
+        
 
 if __name__ == '__main__':
 
